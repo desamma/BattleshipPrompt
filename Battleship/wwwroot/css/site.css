@@ -19,12 +19,17 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-image: url('../images/wuwa.avif');
+  background-size: cover;
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(7, 30px);
     grid-gap: 2px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .cell {
