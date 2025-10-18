@@ -19,7 +19,6 @@ html {
 
 body {
   margin-bottom: 60px;
-  background-image: url('../images/woer.jpg');
   background-size: cover;
 }
 
@@ -35,6 +34,7 @@ body {
 .cell {
     width: 30px;
     height: 30px;
+    background-image: url('../images/woer.jpg');
     position: relative;
 }
 
