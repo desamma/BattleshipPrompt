@@ -46,61 +46,61 @@ body {
 
 .ShipCarrierHull {
     background-image: url('../images/Carrier/ShipCarrierHull.png');
-    background-size: 400% 100%;
+    background-size: 100% 400%;
 }
 
 .ShipCarrierHull.rotate-90 {
-    background-size: 100% 400%;
+    background-size: 400% 100%;
 }
 
 .ShipDestroyerHull {
     background-image: url('../images/Destroyer/ShipDestroyerHull.png');
-    background-size: 300% 100%;
+    background-size: 100% 300%;
 }
 
 .ShipDestroyerHull.rotate-90 {
-    background-size: 100% 300%;
+    background-size: 300% 100%;
 }
 
 .ShipPatrolHull {
     background-image: url('../images/PatrolBoat/ShipPatrolHull.png');
-    background-size: 200% 100%;
-}
-
-.ShipPatrolHull.rotate-90 {
     background-size: 100% 200%;
 }
 
+.ShipPatrolHull.rotate-90 {
+    background-size: 200% 100%;
+}
+
 .ship-segment-0 {
-    background-position-x: 0%;
-}
-
-.ship-segment-1 {
-    background-position-x: 33.33%;
-}
-
-.ship-segment-2 {
-    background-position-x: 66.66%;
-}
-
-.ship-segment-3 {
-    background-position-x: 100%;
-}
-
-.rotate-90.ship-segment-0 {
     background-position-y: 0%;
 }
 
-.rotate-90.ship-segment-1 {
+.ship-segment-1 {
     background-position-y: 33.33%;
 }
 
-.rotate-90.ship-segment-2 {
+.ship-segment-2 {
     background-position-y: 66.66%;
 }
 
-.rotate-90.ship-segment-3 {
+.ship-segment-3 {
     background-position-y: 100%;
+}
+
+.rotate-90.ship-segment-0 {
+    background-position-x: 0%;
+}
+
+.rotate-90.ship-segment-1 {
+    background-position-x: 33.33%;
+}
+
+.rotate-90.ship-segment-2 {
+    background-position-x: 66.66%;
+}
+
+.rotate-90.ship-segment-3 {
+    background-position-x: 100%;
 }
 
 .hit {
@@ -109,9 +109,10 @@ body {
 }
 
 .miss {
-    background-color: lightblue;
+    background-image: url('../images/miss.png');
+    background-size: cover;
 }
 
 .water {
-    background-color: #eee;
+    background-color: blue;
 }
