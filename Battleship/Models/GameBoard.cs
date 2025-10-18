@@ -136,7 +136,7 @@ namespace Battleship.Models
             if (!isEnemy && ship != null)
             {
                 var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
-                var rotationClass = ship.IsHorizontal ? "rotate-90" : "";
+                var rotationClass = ship.IsHorizontal ? "" : "rotate-90";
                 var segment = ship.IsHorizontal ? col - ship.Col : row - ship.Row;
                 display.ShipClass = $"ship {imageName} {rotationClass} ship-segment-{segment}";
             }
