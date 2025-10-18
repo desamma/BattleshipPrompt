@@ -23,6 +23,13 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Reset()
+    {
+        HttpContext.Session.Remove("_Game");
+        HttpContext.Session.Remove("_TwoPlayerGame");
+        return RedirectToAction("Index");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
