@@ -34,11 +34,8 @@ body {
 .cell {
     width: 30px;
     height: 30px;
-    background-image: url('../images/woer.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+    position: relative;
+}
 
 .cell > div {
     position: absolute;
@@ -49,7 +46,8 @@ body {
 }
 
 .water {
-    background-color: lightblue;
+    background-image: url('../images/woer.jpg');
+    background-size: cover;
 }
 
 .ship {
