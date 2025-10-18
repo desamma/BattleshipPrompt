@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Battleship.Models;
+using System;
 
 namespace Battleship.Controllers
 {
@@ -14,6 +15,8 @@ namespace Battleship.Controllers
             if (gameState == null)
             {
                 gameState = new TwoPlayerGameState();
+                RandomlyPlaceShips(gameState.Player1Board);
+                RandomlyPlaceShips(gameState.Player2Board);
                 HttpContext.Session.SetObject(SessionKeyTwoPlayerGame, gameState);
             }
 
@@ -21,51 +24,11 @@ namespace Battleship.Controllers
         }
 
         [HttpPost]
-        public IActionResult PlaceShip(int row, int col, bool isHorizontal)
-        {
-            var gameState = HttpContext.Session.GetObject<TwoPlayerGameState>(SessionKeyTwoPlayerGame);
-
-            if (gameState.IsShipPlacementPhase)
-            {
-                var shipsToPlace = gameState.IsPlayer1Turn ? gameState.Player1ShipsToPlace : gameState.Player2ShipsToPlace;
-                var board = gameState.IsPlayer1Turn ? gameState.Player1Board : gameState.Player2Board;
-
-                if (shipsToPlace.Count > 0)
-                {
-                    var shipSize = shipsToPlace[0];
-                    if (board.PlaceShip(new Ship { Size = shipSize }, row, col, isHorizontal))
-                    {
-                        shipsToPlace.RemoveAt(0);
-                    }
-                }
-
-                if (gameState.Player1ShipsToPlace.Count == 0 && gameState.Player2ShipsToPlace.Count == 0)
-                {
-                    gameState.IsShipPlacementPhase = false;
-                    gameState.Message = "Player 1's turn.";
-                }
-                else if (gameState.Player1ShipsToPlace.Count == 0)
-                {
-                    gameState.IsPlayer1Turn = false;
-                    gameState.Message = "Player 2, place your ships.";
-                }
-                else if (shipsToPlace.Count == 0)
-                {
-                    gameState.IsPlayer1Turn = true;
-                    gameState.Message = "Player 1, place your ships.";
-                }
-            }
-
-            HttpContext.Session.SetObject(SessionKeyTwoPlayerGame, gameState);
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
         public IActionResult Attack(int row, int col)
         {
             var gameState = HttpContext.Session.GetObject<TwoPlayerGameState>(SessionKeyTwoPlayerGame);
 
-            if (!gameState.IsGameOver && !gameState.IsShipPlacementPhase)
+            if (!gameState.IsGameOver)
             {
                 var board = gameState.IsPlayer1Turn ? gameState.Player2Board : gameState.Player1Board;
                 var result = board.Attack(row, col);
@@ -93,8 +56,28 @@ namespace Battleship.Controllers
         public IActionResult NewGame()
         {
             var gameState = new TwoPlayerGameState();
+            RandomlyPlaceShips(gameState.Player1Board);
+            RandomlyPlaceShips(gameState.Player2Board);
             HttpContext.Session.SetObject(SessionKeyTwoPlayerGame, gameState);
             return RedirectToAction("Index");
+        }
+
+        private void RandomlyPlaceShips(GameBoard board)
+        {
+            var random = new Random();
+            var ships = new[] { 3, 2, 1 };
+
+            foreach (var shipSize in ships)
+            {
+                bool placed = false;
+                while (!placed)
+                {
+                    var row = random.Next(GameBoard.Size);
+                    var col = random.Next(GameBoard.Size);
+                    var isHorizontal = random.Next(2) == 0;
+                    placed = board.PlaceShip(new Ship { Size = shipSize }, row, col, isHorizontal);
+                }
+            }
         }
     }
 }
