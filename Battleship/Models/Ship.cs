@@ -4,12 +4,25 @@ namespace Battleship.Models
     {
         public int Size { get; set; }
         public int Hits { get; set; }
-        public bool IsSunk => Hits >= Size;
+        public int Row { get; set; }
+        public int Col { get; set; }
+        public bool IsHorizontal { get; set; }
 
-        public Ship(int size)
+        public bool IsSunk()
         {
-            Size = size;
-            Hits = 0;
+            return Hits >= Size;
+        }
+
+        public bool IsAt(int row, int col)
+        {
+            if (IsHorizontal)
+            {
+                return row == Row && col >= Col && col < Col + Size;
+            }
+            else
+            {
+                return col == Col && row >= Row && row < Row + Size;
+            }
         }
     }
 }
