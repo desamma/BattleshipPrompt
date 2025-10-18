@@ -1,3 +1,5 @@
+using System;
+
 namespace Battleship.Models
 {
     public class GameState
@@ -13,8 +15,20 @@ namespace Battleship.Models
             PlayerBoard = new GameBoard();
             ComputerBoard = new GameBoard();
             IsPlayerTurn = true;
-            Message = "Player's turn.";
+            Message = "Make your move.";
             IsGameOver = false;
+
+            InitializeBoards();
+        }
+
+        private void InitializeBoards()
+        {
+            // Simplified ship placement for demonstration
+            PlayerBoard.PlaceShip(new Ship { Size = 3 }, 0, 0, true);
+            PlayerBoard.PlaceShip(new Ship { Size = 4 }, 2, 1, false);
+
+            ComputerBoard.PlaceShip(new Ship { Size = 3 }, 1, 1, true);
+            ComputerBoard.PlaceShip(new Ship { Size = 4 }, 3, 0, false);
         }
     }
 }

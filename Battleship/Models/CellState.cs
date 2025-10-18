@@ -1,9 +1,11 @@
 namespace Battleship.Models
 {
-    public class CellState
+    public enum CellState
     {
-        public bool IsOccupied { get; set; }
-        public bool IsHit { get; set; }
-        public Ship Ship { get; set; }
+        Water,
+        Ship,
+        Hit,
+        Miss,
+        Occupied
     }
 }
