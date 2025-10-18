@@ -29,11 +29,16 @@ namespace Battleship.Models
         public void RandomizeShipPlacement()
         {
             var random = new Random();
-            var shipSizes = new[] { 2, 4, 5 };
-
-            foreach (var size in shipSizes)
+            var shipConfigs = new[]
             {
-                var ship = new Ship { Size = size };
+                new { Size = 4, ImagePath = "/images/Carrier/ShipCarrierHull.png" },
+                new { Size = 3, ImagePath = "/images/Destroyer/ShipDestroyerHull.png" },
+                new { Size = 2, ImagePath = "/images/PatrolBoat/ShipPatrolHull.png" }
+            };
+
+            foreach (var config in shipConfigs)
+            {
+                var ship = new Ship { Size = config.Size, ImagePath = config.ImagePath };
                 bool placed = false;
                 while (!placed)
                 {
@@ -130,7 +135,18 @@ namespace Battleship.Models
                 case CellState.Miss:
                     return "miss";
                 case CellState.Ship:
-                    return isEnemy ? "water" : "ship"; 
+                    if (isEnemy)
+                    {
+                        return "water";
+                    }
+                    else
+                    {
+                        var ship = Ships.First(s => s.IsAt(row, col));
+                        var rotationClass = ship.IsHorizontal ? "" : "rotate-90";
+                        var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
+                        var segment = ship.IsHorizontal ? col - ship.Col : row - ship.Row;
+                        return $"ship {imageName} {rotationClass} ship-segment-{segment}";
+                    }
                 default:
                     return "water";
             }

@@ -37,8 +37,44 @@ body {
 }
 
 .ship {
-    background-color: gray;
+    background-repeat: no-repeat;
 }
+
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
+.ShipCarrierHull {
+    background-image: url('../images/Carrier/ShipCarrierHull.png');
+    background-size: 400% 100%;
+}
+
+.ShipDestroyerHull {
+    background-image: url('../images/Destroyer/ShipDestroyerHull.png');
+    background-size: 300% 100%;
+}
+
+.ShipPatrolHull {
+    background-image: url('../images/PatrolBoat/ShipPatrolHull.png');
+    background-size: 200% 100%;
+}
+
+.ship-segment-0 {
+    background-position-x: 0%;
+}
+
+.ship-segment-1 {
+    background-position-x: 33.33%;
+}
+
+.ship-segment-2 {
+    background-position-x: 66.66%;
+}
+
+.ship-segment-3 {
+    background-position-x: 100%;
+}
+
 
 .hit {
     background-color: red;

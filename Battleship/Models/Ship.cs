@@ -7,6 +7,7 @@ namespace Battleship.Models
         public int Row { get; set; }
         public int Col { get; set; }
         public bool IsHorizontal { get; set; }
+        public string ImagePath { get; set; }
 
         public bool IsSunk()
         {
