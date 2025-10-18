@@ -25,30 +25,41 @@
                 <div class="row">
                     @for (int j = 0; j < GameBoard.Size; j++)
                     {
-                        if (Model.IsShipPlacementPhase)
-                        {
-                            <form asp-action="PlaceShip" asp-controller="TwoPlayerGame" method="post">
-                                <input type="hidden" name="row" value="@i" />
-                                <input type="hidden" name="col" value="@j" />
-                                <input type="radio" name="isHorizontal" value="true" checked /> Horizontal
-                                <input type="radio" name="isHorizontal" value="false" /> Vertical
-                                <button type="submit" class="cell @Model.Player2Board.GetCellClass(i, j, true)"></button>
-                            </form>
-                        }
-                        else
-                        {
-                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
-                                <input type="hidden" name="row" value="@i" />
-                                <input type="hidden" name="col" value="@j" />
-                                <button type="submit" class="cell @Model.Player2Board.GetCellClass(i, j, true)"></button>
-                            </form>
-                        }
+                        <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
+                            <input type="hidden" name="row" value="@i" />
+                            <input type="hidden" name="col" value="@j" />
+                            <button type="submit" class="cell @Model.Player2Board.GetCellClass(i, j, true)"></button>
+                        </form>
                     }
                 </div>
             }
         </div>
     </div>
 </div>
+
+@if (Model.IsShipPlacementPhase)
+{
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3>Place Your Ships</h3>
+            <form asp-action="PlaceShip" asp-controller="TwoPlayerGame" method="post">
+                <div class="form-group">
+                    <label for="row">Row:</label>
+                    <input type="number" name="row" min="0" max="@(GameBoard.Size - 1)" required />
+                </div>
+                <div class="form-group">
+                    <label for="col">Column:</label>
+                    <input type="number" name="col" min="0" max="@(GameBoard.Size - 1)" required />
+                </div>
+                <div class="form-group">
+                    <input type="radio" name="isHorizontal" value="true" checked /> Horizontal
+                    <input type="radio" name="isHorizontal" value="false" /> Vertical
+                </div>
+                <button type="submit" class="btn btn-primary">Place Ship</button>
+            </form>
+        </div>
+    </div>
+}
 
 <div class="row">
     <div class="col-md-12 text-center">
