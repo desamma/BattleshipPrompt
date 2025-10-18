@@ -35,8 +35,10 @@ body {
     width: 30px;
     height: 30px;
     background-image: url('../images/woer.jpg');
-    position: relative;
-}
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 
 .cell > div {
     position: absolute;
