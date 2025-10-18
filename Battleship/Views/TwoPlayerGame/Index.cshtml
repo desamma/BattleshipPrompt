@@ -6,22 +6,31 @@
     <div class="col-md-6">
         <h2>Player 1's Board</h2>
         <div class="board">
-            @for (int i = 0; i < GameBoard.Size; i++)
+            @for (int i = 0; i < Battleship.Models.GameBoard.Size; i++)
             {
                 <div class="row">
-                    @for (int j = 0; j < GameBoard.Size; j++)
+                    @for (int j = 0; j < Battleship.Models.GameBoard.Size; j++)
                     {
+                        var cellInfo = Model.Player1Board.GetCellDisplay(i, j, Model.IsPlayer1Turn);
                         if (!Model.IsPlayer1Turn)
                         {
                             <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
                                 <input type="hidden" name="row" value="@i" />
                                 <input type="hidden" name="col" value="@j" />
-                                <button type="submit" class="cell @Model.Player1Board.GetCellClass(i, j, true)"></button>
+                                <button type="submit" class="cell">
+                                    <div class="@cellInfo.BackgroundClass"></div>
+                                    <div class="@cellInfo.ShipClass"></div>
+                                    <div class="@cellInfo.MarkerClass"></div>
+                                </button>
                             </form>
                         }
                         else
                         {
-                            <div class="cell @Model.Player1Board.GetCellClass(i, j, true)"></div>
+                            <div class="cell">
+                                <div class="@cellInfo.BackgroundClass"></div>
+                                <div class="@cellInfo.ShipClass"></div>
+                                <div class="@cellInfo.MarkerClass"></div>
+                            </div>
                         }
                     }
                 </div>
@@ -31,22 +40,31 @@
     <div class="col-md-6">
         <h2>Player 2's Board</h2>
         <div class="board">
-            @for (int i = 0; i < GameBoard.Size; i++)
+            @for (int i = 0; i < Battleship.Models.GameBoard.Size; i++)
             {
                 <div class="row">
-                    @for (int j = 0; j < GameBoard.Size; j++)
+                    @for (int j = 0; j < Battleship.Models.GameBoard.Size; j++)
                     {
+                        var cellInfo = Model.Player2Board.GetCellDisplay(i, j, !Model.IsPlayer1Turn);
                         if (Model.IsPlayer1Turn)
                         {
                             <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
                                 <input type="hidden" name="row" value="@i" />
                                 <input type="hidden" name="col" value="@j" />
-                                <button type="submit" class="cell @Model.Player2Board.GetCellClass(i, j, true)"></button>
+                                <button type="submit" class="cell">
+                                    <div class="@cellInfo.BackgroundClass"></div>
+                                    <div class="@cellInfo.ShipClass"></div>
+                                    <div class="@cellInfo.MarkerClass"></div>
+                                </button>
                             </form>
                         }
                         else
                         {
-                            <div class="cell @Model.Player2Board.GetCellClass(i, j, true)"></div>
+                            <div class="cell">
+                                <div class="@cellInfo.BackgroundClass"></div>
+                                <div class="@cellInfo.ShipClass"></div>
+                                <div class="@cellInfo.MarkerClass"></div>
+                            </div>
                         }
                     }
                 </div>
