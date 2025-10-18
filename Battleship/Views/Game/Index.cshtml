@@ -1,9 +1,8 @@
 @model Battleship.Models.GameState
-
-@{    ViewData["Title"] = "Battleship";}
-
-<audio id="cannon-sound" src="/sounds/cannon.mp3" preload="auto"></audio>
-
+@{
+    ViewData["Title"] = "Battleship";
+}
+<audio id="cannon-sound" src="~/sounds/cannon.mp3" preload="auto"></audio>
 <div class="row">
     <div class="col-md-6">
         <h2>Your Board</h2>
@@ -33,7 +32,7 @@
                     @for (int j = 0; j < Battleship.Models.GameBoard.Size; j++)
                     {
                         var cellInfo = Model.ComputerBoard.GetCellDisplay(i, j, true);
-                        <form asp-action="Attack" asp-controller="Game" method="post" onsubmit="document.getElementById('cannon-sound').play();">
+                        <form asp-action="Attack" asp-controller="Game" method="post" onsubmit="return playSound(event, this);">
                             <input type="hidden" name="row" value="@i" />
                             <input type="hidden" name="col" value="@j" />
                             <button type="submit" class="cell">
@@ -48,7 +47,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-12 text-center">
         <h3>@Model.Message</h3>
@@ -58,3 +56,18 @@
         }
     </div>
 </div>
+
+<script>
+    function playSound(event, form) {
+        event.preventDefault();
+        var audio = document.getElementById('cannon-sound');
+        audio.play();
+
+        // Submit the form after a short delay to allow sound to play
+        setTimeout(function() {
+            form.submit();
+        }, 300); // 300ms delay - adjust as needed
+
+        return false;
+    }
+</script>

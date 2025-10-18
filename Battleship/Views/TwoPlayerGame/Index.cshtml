@@ -1,8 +1,10 @@
 @model Battleship.Models.TwoPlayerGameState
 
-@{    ViewData["Title"] = "Battleship - Two Player";}
+@{
+    ViewData["Title"] = "Battleship - Two Player";
+}
 
-<audio id="cannon-sound" src="/sounds/cannon.mp3" preload="auto"></audio>
+<audio id="cannon-sound" src="~/sounds/cannon.mp3" preload="auto"></audio>
 
 <div class="row">
     <div class="col-md-6">
@@ -16,7 +18,7 @@
                         var cellInfo = Model.Player1Board.GetCellDisplay(i, j, Model.IsPlayer1Turn);
                         if (!Model.IsPlayer1Turn)
                         {
-                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post" onsubmit="document.getElementById('cannon-sound').play();">
+                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post" onsubmit="return playSound(event, this);">
                                 <input type="hidden" name="row" value="@i" />
                                 <input type="hidden" name="col" value="@j" />
                                 <button type="submit" class="cell">
@@ -50,7 +52,7 @@
                         var cellInfo = Model.Player2Board.GetCellDisplay(i, j, !Model.IsPlayer1Turn);
                         if (Model.IsPlayer1Turn)
                         {
-                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post" onsubmit="document.getElementById('cannon-sound').play();">
+                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post" onsubmit="return playSound(event, this);">
                                 <input type="hidden" name="row" value="@i" />
                                 <input type="hidden" name="col" value="@j" />
                                 <button type="submit" class="cell">
@@ -88,3 +90,18 @@
         }
     </div>
 </div>
+
+<script>
+    function playSound(event, form) {
+        event.preventDefault();
+        var audio = document.getElementById('cannon-sound');
+        audio.play();
+
+        // Submit the form after a short delay to allow sound to play
+        setTimeout(function() {
+            form.submit();
+        }, 300); // 300ms delay - adjust as needed
+
+        return false;
+    }
+</script>
