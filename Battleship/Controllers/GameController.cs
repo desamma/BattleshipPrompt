@@ -60,34 +60,12 @@ namespace Battleship.Controllers
             gameState.ComputerBoard = new GameBoard();
 
             // Place ships
-            PlaceShips(gameState.PlayerBoard);
-            PlaceShips(gameState.ComputerBoard);
+            gameState.PlayerBoard.RandomizeShipPlacement();
+            gameState.ComputerBoard.RandomizeShipPlacement();
 
             gameState.IsPlayerTurn = true;
             gameState.Message = "Player's turn.";
             gameState.IsGameOver = false;
-        }
-
-        private void PlaceShips(GameBoard board)
-        {
-            var random = new Random();
-            var shipsToPlace = new[] { 3, 2, 1 };
-
-            foreach (var shipSize in shipsToPlace)
-            {
-                bool placed = false;
-                while (!placed)
-                {
-                    int row = random.Next(GameBoard.Size);
-                    int col = random.Next(GameBoard.Size);
-                    bool isHorizontal = random.Next(2) == 0;
-
-                    if (board.PlaceShip(new Ship { Size = shipSize, Hits = 0 }, row, col, isHorizontal))
-                    {
-                        placed = true;
-                    }
-                }
-            }
         }
         
         private void ProcessPlayerAttack(GameState gameState, int row, int col)

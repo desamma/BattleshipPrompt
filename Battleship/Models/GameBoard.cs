@@ -26,6 +26,30 @@ namespace Battleship.Models
             Ships = new List<Ship>();
         }
 
+        public void RandomizeShipPlacement()
+        {
+            var random = new Random();
+            var shipSizes = new[] { 3, 2, 1 };
+
+            foreach (var size in shipSizes)
+            {
+                var ship = new Ship { Size = size };
+                bool placed = false;
+                while (!placed)
+                {
+                    var isHorizontal = random.Next(2) == 0;
+                    var row = random.Next(Size);
+                    var col = random.Next(Size);
+
+                    if (CanPlaceShip(ship, row, col, isHorizontal))
+                    {
+                        PlaceShip(ship, row, col, isHorizontal);
+                        placed = true;
+                    }
+                }
+            }
+        }
+
         public bool PlaceShip(Ship ship, int row, int col, bool isHorizontal)
         {
             if (CanPlaceShip(ship, row, col, isHorizontal))
