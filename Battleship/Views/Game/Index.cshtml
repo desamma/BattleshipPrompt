@@ -1,0 +1,49 @@
+@model Battleship.Models.GameState
+
+@{    ViewData["Title"] = "Battleship";}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Your Board</h2>
+        <div class="board">
+            @for (int i = 0; i < GameBoard.Size; i++)
+            {
+                <div class="row">
+                    @for (int j = 0; j < GameBoard.Size; j++)
+                    {
+                        <div class="cell @Model.PlayerBoard.GetCellClass(i, j)"></div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>Computer's Board</h2>
+        <div class="board">
+            @for (int i = 0; i < GameBoard.Size; i++)
+            {
+                <div class="row">
+                    @for (int j = 0; j < GameBoard.Size; j++)
+                    {
+                        <form asp-action="Attack" asp-controller="Game" method="post">
+                            <input type="hidden" name="row" value="@i" />
+                            <input type="hidden" name="col" value="@j" />
+                            <button type="submit" class="cell @Model.ComputerBoard.GetCellClass(i, j, true)"></button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h3>@Model.Message</h3>
+        @if (Model.IsGameOver)
+        {
+            <a asp-action="NewGame" class="btn btn-primary">Play Again</a>
+        }
+    </div>
+</div>
+
