@@ -8,8 +8,8 @@ namespace Battleship.Models
     public class GameBoard
     {
         public const int Size = 7;
-        public List<List<CellState>> Cells { get; private set; }
-        public List<Ship> Ships { get; private set; }
+        public List<List<CellState>> Cells { get; set; }
+        public List<Ship> Ships { get; set; }
 
         public GameBoard()
         {
@@ -79,10 +79,10 @@ namespace Battleship.Models
                 return CellState.Occupied;
             }
 
-            if (Cells[row][col] == CellState.Ship)
+            var ship = Ships.FirstOrDefault(s => s.IsAt(row, col));
+            if (ship != null)
             {
                 Cells[row][col] = CellState.Hit;
-                var ship = Ships.First(s => s.IsAt(row, col));
                 ship.Hits++;
                 return CellState.Hit;
             }
