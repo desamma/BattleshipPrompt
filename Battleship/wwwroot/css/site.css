@@ -52,57 +52,27 @@ body {
 
 .ship {
     background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .ShipCarrierHull {
     background-image: url('../images/Carrier/ShipCarrierHull.png');
-    background-size: 100% 400%;
+    height: 122px; /* 4 cells * 30px + 2px gap * 3 */
 }
 
 .ShipDestroyerHull {
     background-image: url('../images/Destroyer/ShipDestroyerHull.png');
-    background-size: 100% 300%;
+    height: 92px; /* 3 cells * 30px + 2px gap * 2 */
 }
 
 .ShipPatrolHull {
     background-image: url('../images/PatrolBoat/ShipPatrolHull.png');
-    background-size: 100% 200%;
+    height: 62px; /* 2 cells * 30px + 2px gap * 1 */
 }
 
 .rotate-90 {
-    transform: rotate(90deg);
-}
-
-.ship-segment-0 {
-    background-position-y: 0%;
-}
-
-.ship-segment-1 {
-    background-position-y: 33.33%;
-}
-
-.ship-segment-2 {
-    background-position-y: 66.66%;
-}
-
-.ship-segment-3 {
-    background-position-y: 100%;
-}
-
-.rotate-90.ship-segment-0 {
-    background-position-x: 0%;
-}
-
-.rotate-90.ship-segment-1 {
-    background-position-x: 33.33%;
-}
-
-.rotate-90.ship-segment-2 {
-    background-position-x: 66.66%;
-}
-
-.rotate-90.ship-segment-3 {
-    background-position-x: 100%;
+    transform-origin: top left;
+    transform: rotate(90deg) translateX(30px);
 }
 
 .hit {

@@ -135,10 +135,13 @@ namespace Battleship.Models
 
             if (!isEnemy && ship != null)
             {
-                var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
-                var rotationClass = ship.IsHorizontal ? "" : "rotate-90";
-                var segment = ship.IsHorizontal ? col - ship.Col : ship.Row - row;
-                display.ShipClass = $"ship {imageName} {rotationClass} ship-segment-{segment}";
+                // The ship sprite is positioned on the top-left cell of the ship.
+                if (row == ship.Row && col == ship.Col)
+                {
+                    var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
+                    var rotationClass = ship.IsHorizontal ? "" : "rotate-90";
+                    display.ShipClass = $"ship {imageName} {rotationClass}";
+                }
             }
 
             switch (state)
