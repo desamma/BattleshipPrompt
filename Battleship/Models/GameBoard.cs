@@ -131,6 +131,15 @@ namespace Battleship.Models
             var state = Cells[row][col];
 
             display.BackgroundClass = "water";
+            var ship = Ships.FirstOrDefault(s => s.IsAt(row, col));
+
+            if (!isEnemy && ship != null)
+            {
+                var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
+                var rotationClass = ship.IsHorizontal ? "rotate-90" : "";
+                var segment = ship.IsHorizontal ? col - ship.Col : row - ship.Row;
+                display.ShipClass = $"ship {imageName} {rotationClass} ship-segment-{segment}";
+            }
 
             switch (state)
             {
@@ -139,19 +148,6 @@ namespace Battleship.Models
                     break;
                 case CellState.Miss:
                     display.MarkerClass = "miss";
-                    break;
-                case CellState.Ship:
-                    if (!isEnemy)
-                    {
-                        var ship = Ships.FirstOrDefault(s => s.IsAt(row, col));
-                        if (ship != null && !string.IsNullOrEmpty(ship.ImagePath))
-                        {
-                            var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
-                            var rotationClass = ship.IsHorizontal ? "rotate-90" : "";
-                            var segment = ship.IsHorizontal ? col - ship.Col : row - ship.Row;
-                            display.ShipClass = $"ship {imageName} {rotationClass} ship-segment-{segment}";
-                        }
-                    }
                     break;
             }
 
