@@ -29,7 +29,7 @@ namespace Battleship.Models
         public void RandomizeShipPlacement()
         {
             var random = new Random();
-            var shipSizes = new[] { 3, 2, 1 };
+            var shipSizes = new[] { 2, 4, 5 };
 
             foreach (var size in shipSizes)
             {

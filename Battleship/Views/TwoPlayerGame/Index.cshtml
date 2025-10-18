@@ -11,7 +11,18 @@
                 <div class="row">
                     @for (int j = 0; j < GameBoard.Size; j++)
                     {
-                        <div class="cell @Model.Player1Board.GetCellClass(i, j)"></div>
+                        if (!Model.IsPlayer1Turn)
+                        {
+                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
+                                <input type="hidden" name="row" value="@i" />
+                                <input type="hidden" name="col" value="@j" />
+                                <button type="submit" class="cell @Model.Player1Board.GetCellClass(i, j, true)"></button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="cell @Model.Player1Board.GetCellClass(i, j)"></div>
+                        }
                     }
                 </div>
             }
