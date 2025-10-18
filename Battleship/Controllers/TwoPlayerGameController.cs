@@ -15,8 +15,8 @@ namespace Battleship.Controllers
             if (gameState == null)
             {
                 gameState = new TwoPlayerGameState();
-                RandomlyPlaceShips(gameState.Player1Board);
-                RandomlyPlaceShips(gameState.Player2Board);
+                gameState.Player1Board.RandomizeShipPlacement();
+                gameState.Player2Board.RandomizeShipPlacement();
                 HttpContext.Session.SetObject(SessionKeyTwoPlayerGame, gameState);
             }
 
@@ -58,28 +58,10 @@ namespace Battleship.Controllers
         public IActionResult NewGame()
         {
             var gameState = new TwoPlayerGameState();
-            RandomlyPlaceShips(gameState.Player1Board);
-            RandomlyPlaceShips(gameState.Player2Board);
+            gameState.Player1Board.RandomizeShipPlacement();
+            gameState.Player2Board.RandomizeShipPlacement();
             HttpContext.Session.SetObject(SessionKeyTwoPlayerGame, gameState);
             return RedirectToAction("Index");
-        }
-
-        private void RandomlyPlaceShips(GameBoard board)
-        {
-            var random = new Random();
-            var ships = new[] { 3, 2, 1 };
-
-            foreach (var shipSize in ships)
-            {
-                bool placed = false;
-                while (!placed)
-                {
-                    var row = random.Next(GameBoard.Size);
-                    var col = random.Next(GameBoard.Size);
-                    var isHorizontal = random.Next(2) == 0;
-                    placed = board.PlaceShip(new Ship { Size = shipSize }, row, col, isHorizontal);
-                }
-            }
         }
     }
 }
