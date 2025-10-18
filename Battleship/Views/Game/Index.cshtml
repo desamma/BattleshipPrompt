@@ -2,6 +2,8 @@
 
 @{    ViewData["Title"] = "Battleship";}
 
+<audio id="cannon-sound" src="/sounds/cannon.mp3" preload="auto"></audio>
+
 <div class="row">
     <div class="col-md-6">
         <h2>Your Board</h2>
@@ -31,7 +33,7 @@
                     @for (int j = 0; j < Battleship.Models.GameBoard.Size; j++)
                     {
                         var cellInfo = Model.ComputerBoard.GetCellDisplay(i, j, true);
-                        <form asp-action="Attack" asp-controller="Game" method="post">
+                        <form asp-action="Attack" asp-controller="Game" method="post" onsubmit="document.getElementById('cannon-sound').play();">
                             <input type="hidden" name="row" value="@i" />
                             <input type="hidden" name="col" value="@j" />
                             <button type="submit" class="cell">

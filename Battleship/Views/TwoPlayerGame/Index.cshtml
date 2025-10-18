@@ -2,6 +2,8 @@
 
 @{    ViewData["Title"] = "Battleship - Two Player";}
 
+<audio id="cannon-sound" src="/sounds/cannon.mp3" preload="auto"></audio>
+
 <div class="row">
     <div class="col-md-6">
         <h2>Player 1's Board</h2>
@@ -14,11 +16,12 @@
                         var cellInfo = Model.Player1Board.GetCellDisplay(i, j, Model.IsPlayer1Turn);
                         if (!Model.IsPlayer1Turn)
                         {
-                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
+                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post" onsubmit="document.getElementById('cannon-sound').play();">
                                 <input type="hidden" name="row" value="@i" />
                                 <input type="hidden" name="col" value="@j" />
                                 <button type="submit" class="cell">
                                     <div class="@cellInfo.BackgroundClass"></div>
+                                    <div class="@cellInfo.ShipClass"></div>
                                     <div class="@cellInfo.MarkerClass"></div>
                                 </button>
                             </form>
@@ -27,6 +30,7 @@
                         {
                             <div class="cell">
                                 <div class="@cellInfo.BackgroundClass"></div>
+                                <div class="@cellInfo.ShipClass"></div>
                                 <div class="@cellInfo.MarkerClass"></div>
                             </div>
                         }
@@ -46,11 +50,12 @@
                         var cellInfo = Model.Player2Board.GetCellDisplay(i, j, !Model.IsPlayer1Turn);
                         if (Model.IsPlayer1Turn)
                         {
-                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post">
+                            <form asp-action="Attack" asp-controller="TwoPlayerGame" method="post" onsubmit="document.getElementById('cannon-sound').play();">
                                 <input type="hidden" name="row" value="@i" />
                                 <input type="hidden" name="col" value="@j" />
                                 <button type="submit" class="cell">
                                     <div class="@cellInfo.BackgroundClass"></div>
+                                    <div class="@cellInfo.ShipClass"></div>
                                     <div class="@cellInfo.MarkerClass"></div>
                                 </button>
                             </form>
@@ -59,6 +64,7 @@
                         {
                             <div class="cell">
                                 <div class="@cellInfo.BackgroundClass"></div>
+                                <div class="@cellInfo.ShipClass"></div>
                                 <div class="@cellInfo.MarkerClass"></div>
                             </div>
                         }
