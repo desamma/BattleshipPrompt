@@ -8,18 +8,20 @@ namespace Battleship.Models
     public class GameBoard
     {
         public const int Size = 7;
-        public CellState[,] Cells { get; private set; }
+        public List<List<CellState>> Cells { get; private set; }
         public List<Ship> Ships { get; private set; }
 
         public GameBoard()
         {
-            Cells = new CellState[Size, Size];
+            Cells = new List<List<CellState>>(Size);
             for (int i = 0; i < Size; i++)
             {
+                var row = new List<CellState>(Size);
                 for (int j = 0; j < Size; j++)
                 {
-                    Cells[i, j] = CellState.Water;
+                    row.Add(CellState.Water);
                 }
+                Cells.Add(row);
             }
             Ships = new List<Ship>();
         }
@@ -36,11 +38,11 @@ namespace Battleship.Models
                 {
                     if (isHorizontal)
                     {
-                        Cells[row, col + i] = CellState.Ship;
+                        Cells[row][col + i] = CellState.Ship;
                     }
                     else
                     {
-                        Cells[row + i, col] = CellState.Ship;
+                        Cells[row + i][col] = CellState.Ship;
                     }
                 }
                 Ships.Add(ship);
@@ -56,7 +58,7 @@ namespace Battleship.Models
                 if (col + ship.Size > Size) return false;
                 for (int i = 0; i < ship.Size; i++)
                 {
-                    if (Cells[row, col + i] == CellState.Ship) return false;
+                    if (Cells[row][col + i] == CellState.Ship) return false;
                 }
             }
             else
@@ -64,7 +66,7 @@ namespace Battleship.Models
                 if (row + ship.Size > Size) return false;
                 for (int i = 0; i < ship.Size; i++)
                 {
-                    if (Cells[row + i, col] == CellState.Ship) return false;
+                    if (Cells[row + i][col] == CellState.Ship) return false;
                 }
             }
             return true;
@@ -72,20 +74,20 @@ namespace Battleship.Models
 
         public CellState Attack(int row, int col)
         {
-            if (Cells[row, col] == CellState.Hit || Cells[row, col] == CellState.Miss)
+            if (Cells[row][col] == CellState.Hit || Cells[row][col] == CellState.Miss)
             {
                 return CellState.Occupied;
             }
 
-            if (Cells[row, col] == CellState.Ship)
+            if (Cells[row][col] == CellState.Ship)
             {
-                Cells[row, col] = CellState.Hit;
+                Cells[row][col] = CellState.Hit;
                 var ship = Ships.First(s => s.IsAt(row, col));
                 ship.Hits++;
                 return CellState.Hit;
             }
 
-            Cells[row, col] = CellState.Miss;
+            Cells[row][col] = CellState.Miss;
             return CellState.Miss;
         }
 
@@ -96,7 +98,7 @@ namespace Battleship.Models
 
         public string GetCellClass(int row, int col, bool isEnemy = false)
         {
-            var state = Cells[row, col];
+            var state = Cells[row][col];
             switch (state)
             {
                 case CellState.Hit:

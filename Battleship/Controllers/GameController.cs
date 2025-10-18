@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Battleship.Models;
 using System;
+using Battleship;
 
 namespace Battleship.Controllers
 {
@@ -11,13 +12,13 @@ namespace Battleship.Controllers
 
         public IActionResult Index()
         {
-            var gameState = HttpContext.Session.Get<GameState>(SessionKeyGame);
+            var gameState = HttpContext.Session.GetObject<GameState>(SessionKeyGame);
 
             if (gameState == null)
             {
                 gameState = new GameState();
                 InitializeGame(gameState);
-                HttpContext.Session.Set(SessionKeyGame, gameState);
+                HttpContext.Session.SetObject(SessionKeyGame, gameState);
             }
 
             return View(gameState);
@@ -26,7 +27,7 @@ namespace Battleship.Controllers
         [HttpPost]
         public IActionResult Attack(int row, int col)
         {
-            var gameState = HttpContext.Session.Get<GameState>(SessionKeyGame);
+            var gameState = HttpContext.Session.GetObject<GameState>(SessionKeyGame);
 
             if (gameState != null && !gameState.IsGameOver && gameState.IsPlayerTurn)
             {
@@ -38,7 +39,7 @@ namespace Battleship.Controllers
                 }
             }
 
-            HttpContext.Session.Set(SessionKeyGame, gameState);
+            HttpContext.Session.SetObject(SessionKeyGame, gameState);
             return RedirectToAction(nameof(Index));
         }
         
@@ -46,7 +47,7 @@ namespace Battleship.Controllers
         {
             var gameState = new GameState();
             InitializeGame(gameState);
-            HttpContext.Session.Set(SessionKeyGame, gameState);
+            HttpContext.Session.SetObject(SessionKeyGame, gameState);
 
             return RedirectToAction(nameof(Index));
         }
@@ -139,22 +140,6 @@ namespace Battleship.Controllers
             {
                 gameState.IsPlayerTurn = true;
             }
-        }
-    }
-}
-namespace Microsoft.AspNetCore.Http
-{
-    public static class SessionExtensions
-    {
-        public static void Set<T>(this ISession session, string key, T value)
-        {
-            session.SetString(key, System.Text.Json.JsonSerializer.Serialize(value));
-        }
-
-        public static T Get<T>(this ISession session, string key)
-        {
-            var value = session.GetString(key);
-            return value == null ? default : System.Text.Json.JsonSerializer.Deserialize<T>(value);
         }
     }
 }
