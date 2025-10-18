@@ -45,8 +45,10 @@ namespace Battleship.Controllers
                 else if (result == CellState.Miss)
                 {
                     gameState.Message = "Miss.";
-                    gameState.IsPlayer1Turn = !gameState.IsPlayer1Turn;
                 }
+
+                // Always switch turns
+                gameState.IsPlayer1Turn = !gameState.IsPlayer1Turn;
             }
 
             HttpContext.Session.SetObject(SessionKeyTwoPlayerGame, gameState);

@@ -62,5 +62,9 @@
         {
             <a asp-action="NewGame" class="btn btn-primary">Play Again</a>
         }
+        else
+        {
+            <a asp-action="NewGame" class="btn btn-danger" onclick="return confirm('Are you sure you want to reset the game?');">Reset Game</a>
+        }
     </div>
 </div>
