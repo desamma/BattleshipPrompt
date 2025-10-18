@@ -14,7 +14,7 @@
                         var cellInfo = Model.PlayerBoard.GetCellDisplay(i, j);
                         <div class="cell">
                             <div class="@cellInfo.BackgroundClass"></div>
-                            <div class="@cellInfo.ShipClass" style="@cellInfo.ShipStyle"></div>
+                            <div class="@cellInfo.ShipClass"></div>
                             <div class="@cellInfo.MarkerClass"></div>
                         </div>
                     }
@@ -36,7 +36,7 @@
                             <input type="hidden" name="col" value="@j" />
                             <button type="submit" class="cell">
                                 <div class="@cellInfo.BackgroundClass"></div>
-                                <div class="@cellInfo.ShipClass" style="@cellInfo.ShipStyle"></div>
+                                <div class="@cellInfo.ShipClass"></div>
                                 <div class="@cellInfo.MarkerClass"></div>
                             </button>
                         </form>
