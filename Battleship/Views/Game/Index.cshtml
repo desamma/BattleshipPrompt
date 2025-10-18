@@ -6,12 +6,17 @@
     <div class="col-md-6">
         <h2>Your Board</h2>
         <div class="board">
-            @for (int i = 0; i < GameBoard.Size; i++)
+            @for (int i = 0; i < Battleship.Models.GameBoard.Size; i++)
             {
                 <div class="row">
-                    @for (int j = 0; j < GameBoard.Size; j++)
+                    @for (int j = 0; j < Battleship.Models.GameBoard.Size; j++)
                     {
-                        <div class="cell @Model.PlayerBoard.GetCellClass(i, j)"></div>
+                        var cellInfo = Model.PlayerBoard.GetCellDisplay(i, j);
+                        <div class="cell">
+                            <div class="@cellInfo.BackgroundClass"></div>
+                            <div class="@cellInfo.ShipClass" style="@cellInfo.ShipStyle"></div>
+                            <div class="@cellInfo.MarkerClass"></div>
+                        </div>
                     }
                 </div>
             }
@@ -20,15 +25,20 @@
     <div class="col-md-6">
         <h2>Computer's Board</h2>
         <div class="board">
-            @for (int i = 0; i < GameBoard.Size; i++)
+            @for (int i = 0; i < Battleship.Models.GameBoard.Size; i++)
             {
                 <div class="row">
-                    @for (int j = 0; j < GameBoard.Size; j++)
+                    @for (int j = 0; j < Battleship.Models.GameBoard.Size; j++)
                     {
+                        var cellInfo = Model.ComputerBoard.GetCellDisplay(i, j, true);
                         <form asp-action="Attack" asp-controller="Game" method="post">
                             <input type="hidden" name="row" value="@i" />
                             <input type="hidden" name="col" value="@j" />
-                            <button type="submit" class="cell @Model.ComputerBoard.GetCellClass(i, j, true)"></button>
+                            <button type="submit" class="cell">
+                                <div class="@cellInfo.BackgroundClass"></div>
+                                <div class="@cellInfo.ShipClass" style="@cellInfo.ShipStyle"></div>
+                                <div class="@cellInfo.MarkerClass"></div>
+                            </button>
                         </form>
                     }
                 </div>

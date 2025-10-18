@@ -125,31 +125,34 @@ namespace Battleship.Models
             return Ships.All(s => s.IsSunk());
         }
 
-        public string GetCellClass(int row, int col, bool isEnemy = false)
+        public CellDisplay GetCellDisplay(int row, int col, bool isEnemy = false)
         {
+            var display = new CellDisplay();
             var state = Cells[row][col];
+
+            display.BackgroundClass = "water";
+
             switch (state)
             {
                 case CellState.Hit:
-                    return "hit";
+                    display.MarkerClass = "hit";
+                    break;
                 case CellState.Miss:
-                    return "miss";
+                    display.MarkerClass = "miss";
+                    break;
                 case CellState.Ship:
-                    if (isEnemy)
-                    {
-                        return "water";
-                    }
-                    else
+                    if (!isEnemy)
                     {
                         var ship = Ships.First(s => s.IsAt(row, col));
-                        var rotationClass = ship.IsHorizontal ? "rotate-90" : "";
                         var imageName = ship.ImagePath.Split('/').Last().Split('.').First();
+                        var rotationClass = ship.IsHorizontal ? "rotate-90" : "";
                         var segment = ship.IsHorizontal ? col - ship.Col : row - ship.Row;
-                        return $"ship {imageName} {rotationClass} ship-segment-{segment}";
+                        display.ShipClass = $"ship {imageName} {rotationClass} ship-segment-{segment}";
                     }
-                default:
-                    return "water";
+                    break;
             }
+
+            return display;
         }
     }
 }

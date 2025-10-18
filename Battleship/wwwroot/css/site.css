@@ -30,18 +30,23 @@ body {
 .cell {
     width: 30px;
     height: 30px;
-    border: 1px solid black;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #eee;
+    position: relative;
+}
+
+.cell > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.water {
+    background-color: lightblue;
 }
 
 .ship {
     background-repeat: no-repeat;
-}
-
-.rotate-90 {
-    transform: rotate(90deg);
 }
 
 .ShipCarrierHull {
@@ -49,17 +54,9 @@ body {
     background-size: 100% 400%;
 }
 
-.ShipCarrierHull.rotate-90 {
-    background-size: 400% 100%;
-}
-
 .ShipDestroyerHull {
     background-image: url('../images/Destroyer/ShipDestroyerHull.png');
     background-size: 100% 300%;
-}
-
-.ShipDestroyerHull.rotate-90 {
-    background-size: 300% 100%;
 }
 
 .ShipPatrolHull {
@@ -67,8 +64,8 @@ body {
     background-size: 100% 200%;
 }
 
-.ShipPatrolHull.rotate-90 {
-    background-size: 200% 100%;
+.rotate-90 {
+    transform: rotate(90deg);
 }
 
 .ship-segment-0 {
@@ -111,8 +108,4 @@ body {
 .miss {
     background-image: url('../images/miss.png');
     background-size: cover;
-}
-
-.water {
-    background-color: blue;
 }
